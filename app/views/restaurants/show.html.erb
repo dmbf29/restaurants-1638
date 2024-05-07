@@ -1,0 +1,8 @@
+<div class="container">
+  <h1><%= @restaurant.name %></h1>
+  <p><%= '⭐️' * @restaurant.rating %></p>
+  <p>
+    <%= link_to '❌', restaurant_path(@restaurant), data: { turbo_method: :delete, turbo_confirm: "Delete #{@restaurant.name}?" } %>
+    <%= link_to 'Restaurants', restaurants_path, class: 'btn btn-light'  %>
+  </p>
+</div>
