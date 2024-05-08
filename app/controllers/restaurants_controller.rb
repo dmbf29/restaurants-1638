@@ -1,5 +1,15 @@
 class RestaurantsController < ApplicationController
 
+  # '/restaurants/top'
+  def top
+    @restaurants = Restaurant.where(rating: 5)
+  end
+
+  # '/restaurants/1/chef'
+  def chef
+    @restaurant = Restaurant.find(params[:id])
+  end
+
   # '/restaurants'
   def index
     @restaurants = Restaurant.all

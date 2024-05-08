@@ -1,34 +1,21 @@
 Rails.application.routes.draw do
-  # http_verb '/path', to: 'controller#action', as: :prefix
-  # the prefix is only connected to the path
+  resources :restaurants do
+    # CRUD routes
+    resources :reviews, only: [:new, :create]
+    # Non-CRUD routes
+    collection do
+      get :top
+    end
+    member do
+      get :chef
+    end
+  end
+  resources :reviews, only: [:destroy]
+  # get '/restaurants/top', to: 'restaurants#top', as: :top_restaurants
+  # get '/restaurants/:id/chef', to: 'restaurants#chef', as: :chef_restaurant
 
-
-  # CRUD
-  # Read all
-  get '/restaurants', to: 'restaurants#index', as: :restaurants
-
-  # Create
-  # One page for JUST the form
-  get '/restaurants/new', to: 'restaurants#new', as: :new_restaurant
-  # Another action to create the instance from the form data
-  post '/restaurants', to: 'restaurants#create'
-
-  # Read one
-  get '/restaurants/:id', to: 'restaurants#show', as: :restaurant
-
-  # Update
-  # One page for JUST the form
-  get '/restaurants/:id/edit', to: 'restaurants#edit', as: :edit_restaurant
-  # Another action to update the instance from the form data
-  patch '/restaurants/:id', to: 'restaurants#update'
-
-  # Delete
-  delete '/restaurants/:id', to: 'restaurants#destroy'
 end
 
-
-# See all restaurants -> index - restaurants_path
-# See details about one restaurant -> show
-# Create a restaurant
-# Update a restaurant
-# Destroy a restaurant
+# Non-CRUD Routes
+# collection -> about all restaurants (aka no ID)
+# member     -> about a specific restaurant (aka need an ID)

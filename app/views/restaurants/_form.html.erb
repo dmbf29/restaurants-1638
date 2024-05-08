@@ -3,15 +3,9 @@
 <!-- add the method (post) -->
 <!-- adds the authenticity token -->
 <!-- grouping all of our attributes inside of one hash -->
-<% @restaurant.errors.full_messages.each do |message| %>
-  <p class="text-danger"><%= message %></p>
-<% end %>
-<%= form_with model: @restaurant do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name, class: 'form-control' %>
-  <%= f.label :address %>
-  <%= f.text_field :address, class: 'form-control' %>
-  <%= f.label :rating %>
-  <%= f.number_field :rating, class: 'form-control' %>
+<%= simple_form_for @restaurant do |f| %>
+  <%= f.input :name %>
+  <%= f.input :address %>
+  <%= f.input :rating %>
   <%= f.submit class: 'btn btn-primary mt-2' %>
 <% end %>

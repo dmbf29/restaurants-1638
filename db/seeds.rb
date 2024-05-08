@@ -18,7 +18,8 @@ CHEFS.shuffle.each do |name|
     name: "#{name}'s #{restaurant_name}",
     rating: rand(3..5),
     address: Faker::Address.street_address,
-    category: get_category(restaurant_name)
+    category: get_category(restaurant_name),
+    chef_name: name
   )
 end
 puts "... created #{Restaurant.count} restaurants"
