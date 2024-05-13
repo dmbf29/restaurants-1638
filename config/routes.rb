@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  root to: 'restaurants#index'
   resources :restaurants do
     # CRUD routes
-    resources :reviews, only: [:new, :create]
+    resources :reviews, only: [:create]
     # Non-CRUD routes
     collection do
       get :top
