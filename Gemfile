@@ -43,7 +43,9 @@ gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Custom Added
+gem "bootstrap", "~> 5.2"
 gem 'faker'
+gem "sassc-rails"
 gem "simple_form"
 
 group :development, :test do
