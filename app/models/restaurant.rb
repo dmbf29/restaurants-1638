@@ -1,6 +1,7 @@
 class Restaurant < ApplicationRecord
   # associations
   has_many :reviews, dependent: :destroy # restaurant.reviews
+  belongs_to :user
   # validations
   validates :name, presence: true, uniqueness: true
 end

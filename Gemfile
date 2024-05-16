@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 
 # Custom Added
 gem "bootstrap", "~> 5.2"
+gem "devise"
 gem 'faker'
 gem "sassc-rails"
 gem "simple_form"

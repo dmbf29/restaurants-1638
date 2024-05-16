@@ -1,4 +1,5 @@
 class RestaurantsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show, :top, :chef]
 
   # '/restaurants/top'
   def top
@@ -35,6 +36,7 @@ class RestaurantsController < ApplicationController
   def create
     # we need to create our instance with our STRONG params
     @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user = current_user
     if @restaurant.save
       redirect_to restaurant_path(@restaurant)
     else

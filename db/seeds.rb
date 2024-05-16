@@ -13,6 +13,9 @@ end
 
 puts "Creating #{CHEFS.count} Restaurants..."
 CHEFS.shuffle.each do |name|
+  user = User.find_by(email: "#{name.downcase}@lewagon.org")
+  user = User.create!(email: "#{name.downcase}@lewagon.org", username: name, password: '123123') unless user
+
   restaurant_name = Faker::Restaurant.unique.name
   restaurant = Restaurant.create!(
     name: "#{name}'s #{restaurant_name}",
@@ -20,7 +23,8 @@ CHEFS.shuffle.each do |name|
     address: Faker::Address.street_address,
     category: get_category(restaurant_name),
     chef_name: name,
-    opening_date: Date.today - rand(100...300)
+    opening_date: Date.today - rand(100...300),
+    user: user
   )
   rand(1..5).times do
     Review.create!(
