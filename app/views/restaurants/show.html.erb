@@ -21,23 +21,48 @@
       </div>
       <p class="fw-lighter opacity-75 mt-2"><%= Faker::Restaurant.description  %></p>
       <h3>Reviews</h3>
-      <div>
-        <%= simple_form_for([@restaurant, @review]) do |f| %>
-          <%= f.input :content, label: false %>
-          <%= f.submit 'Submit', class: 'btn btn-primary' %>
-        <% end %>
+      <div data-controller="insert-in-list">
+        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Leave a Review
+        </button>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <!-- <form action="" data-insert-in-list-target="form" data-action="submit->insert-in-list#send"></form> -->
+            <%= render 'reviews/form', review: @review, restaurant: @restaurant %>
+          </div>
+        </div>
+        <div class="reviews" data-insert-in-list-target="reviews">
+          <% @restaurant.reviews.order(created_at: :desc).each do |review| %>
+            <%= render 'reviews/review', review: review %>
+          <% end %>
+        </div>
       </div>
-      <% if @restaurant.reviews.any? %>
-        <% @restaurant.reviews.order(created_at: :desc).each do |review| %>
-          <p class="my-3"><i class="fa-solid fa-quote-left fa-2x me-2"></i><%= review.content %></p>
-        <% end %>
-      <% else %>
-        <p class="m-5 border-left">No reviews yet.</p>
-      <% end %>
     </div>
   </div>
   <div class="col-12 col-sm-4 mt-5">
     <%= render 'restaurants/side_info' %>
   </p>
+</div>
+<ul class="nav tabs-underlined" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <span class="nav-link tab-underlined active" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings-tab-pane" role="tab" aria-controls="bookings-tab-pane" aria-selected="true">Bookings</span>
+  </li>
+  <li class="nav-item" role="presentation">
+    <span class="nav-link tab-underlined" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests-tab-pane" role="tab" aria-controls="requests-tab-pane" aria-selected="false">Requests</span>
+  </li>
+  <li class="nav-item" role="presentation">
+    <span class="nav-link tab-underlined" id="conversations-tab" data-bs-toggle="tab" data-bs-target="#conversations-tab-pane" role="tab" aria-controls="conversations-tab-pane" aria-selected="false">Conversations</span>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade py-3 show active" id="bookings-tab-pane" role="tabpanel" aria-labelledby="bookings-tab" tabindex="0">
+    This is the content for the Bookings tab. Notice in the tab HTML there is a href="#bookings". This is pointing to the id of this div..
+  </div>
+  <div class="tab-pane fade py-3" id="requests-tab-pane" role="tabpanel" aria-labelledby="requests-tab" tabindex="0">
+    This is the content for the Requests tab. Notice in the tab HTML there is a href="#requests". This is pointing to the id of this div..
+  </div>
+  <div class="tab-pane fade py-3" id="conversations-tab-pane" role="tabpanel" aria-labelledby="conversations-tab" tabindex="0">
+    This is the content for the Conversations tab. Notice in the tab HTML there is a href="#converstations". This is pointing to the id of this div.
+  </div>
 </div>
 </div>

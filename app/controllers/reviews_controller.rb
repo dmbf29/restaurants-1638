@@ -14,9 +14,23 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.restaurant = @restaurant
     if @review.save
-      redirect_to restaurant_path(@restaurant)
+      json_sent_to_js_controller = {
+        form: render_to_string(partial: "reviews/form", locals: { review: Review.new, restaurant: @restaurant }, formats: [:html]),
+        review: render_to_string(partial: "reviews/review", locals: { review: @review }, formats: [:html])
+      }
+      respond_to do |format|
+        format.html { redirect_to restaurant_path(@restaurant) }
+        format.json { render json: json_sent_to_js_controller, status: :created }
+      end
     else
-      render 'restaurants/show', status: :unprocessable_entity
+      # only send the form if the review didn't save
+      json_sent_to_js_controller = {
+        form: render_to_string(partial: "reviews/form", locals: { review: @review, restaurant: @restaurant }, formats: [:html])
+      }
+      respond_to do |format|
+        format.html { render 'restaurants/show', status: :unprocessable_entity }
+        format.json { render json: json_sent_to_js_controller, status: :created }
+      end
     end
   end
 

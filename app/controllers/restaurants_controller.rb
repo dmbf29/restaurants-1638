@@ -19,7 +19,9 @@ class RestaurantsController < ApplicationController
   # '/restaurants/1'
   def show
     @restaurant = Restaurant.find(params[:id])
+    # this is for the form
     @review = Review.new
+    # render 'show.html.erb'
   end
 
   # '/restaurants/new'
