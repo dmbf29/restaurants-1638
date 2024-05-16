@@ -43,9 +43,11 @@ gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Custom Added
+gem "autoprefixer-rails"
 gem "bootstrap", "~> 5.2"
 gem "devise"
 gem 'faker'
+gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem "simple_form"
 
