@@ -13,7 +13,10 @@ class RestaurantsController < ApplicationController
 
   # '/restaurants'
   def index
-    @restaurants = Restaurant.all
+    @restaurants = policy_scope(Restaurant)
+
+
+    # @bookings = current_user.bookings
     # render 'index.html.erb'
   end
 
@@ -23,12 +26,14 @@ class RestaurantsController < ApplicationController
     # this is for the form
     @review = Review.new
     # render 'show.html.erb'
+    authorize @restaurant
   end
 
   # '/restaurants/new'
   def new
     # this instance variable is JUST for the form
     @restaurant = Restaurant.new
+    authorize @restaurant
   end
 
   # we cant access from a URL. The form is sending the data here (/restaurants)
@@ -37,6 +42,7 @@ class RestaurantsController < ApplicationController
     # we need to create our instance with our STRONG params
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
+    authorize @restaurant
     if @restaurant.save
       redirect_to restaurant_path(@restaurant)
     else
@@ -49,12 +55,14 @@ class RestaurantsController < ApplicationController
   def edit
     # this instance variable is JUST for the form
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant
   end
 
   def update
     # load the the instacne i want to update
     @restaurant = Restaurant.find(params[:id])
     # update the instance with the strong_params
+    authorize @restaurant
     if @restaurant.update(restaurant_params)
       redirect_to restaurant_path(@restaurant)
     else
@@ -65,6 +73,7 @@ class RestaurantsController < ApplicationController
   # we cant access this one in the URL, but a link can with a delete method
   def destroy
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant
     @restaurant.destroy
     redirect_to restaurants_path, status: :see_other
   end
@@ -73,6 +82,6 @@ class RestaurantsController < ApplicationController
 
   def restaurant_params
     # we are whitelisting the attributes a user can give us
-    params.require(:restaurant).permit(:name, :address, :rating)
+    params.require(:restaurant).permit(:name, :address, :rating, :category, :opening_date)
   end
 end
